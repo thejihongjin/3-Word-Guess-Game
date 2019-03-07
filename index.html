@@ -5,27 +5,69 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
-    <script src="game.js"></script>
+    <!--link rel="stylesheet" type="text/css" media="screen" href="style.css"-->
+    <!--script src="game.js"></script-->
 </head>
 <body>
 	<!--THEME: SOCCER-->
-	Press any key to get started!
-	Wins: 
-
-	Current word: <!--display letters as underscores, to be replaced by letters as user guesses them-->
-	Number of guesses remaining:
-	Letters already guessed: 
+	<p>Press any key to get started!</p>
+    <p id="wins-txt">Wins:</p>
+    <p id="word-txt">Current word:</p> <!--display letters as underscores, to be replaced by letters as user guesses them-->
+	<p id="guesses-left-txt">Number of guesses remaining: </p>
+    <p id="guesses-so-far-txt">Letters already guessed: </p>
 
 	<script type="text/javascript">
-	var wordOptions = ['bicyclekick','defender','friendly','hattrick','lionelmessi','miahamm','nutmeg','wallpass','worldcup','yellowcard']; //array of all words - add words
-	var currentWord = '';
-	var lettersWord = [];
-	//underscore letter placeholders
+		var wordOptions = ['bicyclekick','defender','friendly','hattrick','lionelmessi','miahamm','nutmeg','wallpass','worldcup','yellowcard']; //array of all words
+		var currentWord;
+		var lettersWord = [];
+		//underscore letter placeholders
 
-	var wins = 0;
-	var guessesLeft = 9;
-	var lettersGuessed = '';
+		var wins = 0;
+		var guessesLeft = 9;
+		var lettersGuessed = [];
+        
+		var winsTxt = document.getElementById("wins-txt");
+		var guessesLeftTxt = document.getElementById("guesses-left-txt");
+		var guessesSoFarTxt = document.getElementById("guesses-so-far-txt");
+
+		//press key to start
+		// just need to figure out how to pick new letter - document onload?
+		currentWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+		// split word into letters into array
+
+		document.addEventListener('keyup', userInput);
+		function userInput(event) {
+			var userGuess = event.key.toLowerCase();
+			var newGuess;
+		
+			if (lettersGuessed.indexOf(userGuess) === -1) { //if userGuess not already in lettersGuessed
+				if (lettersWord.indexOf(userGuess) && guessesLeft > 1) { //
+					guessesLeft--;
+					guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
+					//append guess to guesses so far
+					/*newGuess = document.createElement("new-guess");
+					newGuess.textContent = userGuess;
+					guessesSoFarTxt.appendChild(newGuess);*/
+					lettersGuessed.push(userGuess);
+					guessesSoFarTxt.textContent = "Letters already guessed: " + lettersGuessed; //split and append???
+				} else if (/*WORD NOT COMPLETE &&*/ guessesLeft === 1) { //what happens if guesses run out???
+					resetGuesses();
+				} else if (/*WORD COMPLETED*/) { // if word completed
+					wins++;
+					winsTxt.textContent = "Wins: " + wins;
+					resetGuesses();
+				}
+			}
+		}
+
+		function resetGuesses() {
+			guessesLeft = 9;
+			guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
+			guessesSoFarTxt.textContent = "Letters already guessed: ";
+		}
+
+
+
 	</script>
 </body>
 </html>
