@@ -19,45 +19,59 @@
 	<script type="text/javascript">
 		var wordOptions = ['bicyclekick','defender','friendly','hattrick','lionelmessi','miahamm','nutmeg','wallpass','worldcup','yellowcard']; //array of all words
 		var currentWord;
-		var lettersWord = [];
-		//underscore letter placeholders
+		var lettersWord = []; //individual letters of word
+		var hangmanLetters = []; //will hold blank placeholders and successfully guessed letters
 
 		var wins = 0;
 		var guessesLeft = 9;
 		var lettersGuessed = [];
         
 		var winsTxt = document.getElementById("wins-txt");
+		var wordTxt = document.getElementById("word-txt");
 		var guessesLeftTxt = document.getElementById("guesses-left-txt");
 		var guessesSoFarTxt = document.getElementById("guesses-so-far-txt");
 
 		//press key to start
+		//make into function?
 		currentWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
 		console.log(currentWord);
 		lettersWord = currentWord.split('');
 		console.log(lettersWord);
+		for (var i = 0; i < lettersWord.length; i++) {
+			hangmanLetters.push("_")
+		}
+		//console.log(hangmanLetters);
+		wordTxt.textContent = "Current word: " + hangmanLetters.join(" "); //print without commas
 
 		document.addEventListener('keyup', userInput);
 		function userInput(event) {
 			var userGuess = event.key.toLowerCase();
 			//var newGuess;
 		
-			if (lettersGuessed.indexOf(userGuess) === -1) { //if userGuess not already in lettersGuessed
-
-				if (lettersWord.indexOf(userGuess) === -1 && guessesLeft > 1) { //if userGuess not in word and still have guesses left
+			if (hangmanLetters.indexOf("_") > -1 && guessesLeft > 1) { // word not complete and guesses left
+				if (lettersWord.indexOf(userGuess) === -1 && lettersGuessed.indexOf(userGuess) === -1) { //if userGuess not in word and not in lettersGuessed
 					guessesLeft--;
 					guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
 					lettersGuessed.push(userGuess);
 					guessesSoFarTxt.textContent = "Letters already guessed: " + lettersGuessed; //how to add space between letters?
+				} else if (lettersWord.indexOf(userGuess) === -1 && lettersGuessed.indexOf(userGuess) > -1) { //if userGuess not in word and already in lettersGuessed
 
-				//} else if (/*WORD NOT COMPLETE &&*/ guessesLeft === 1) { //what happens if guesses run out???
-				// 	resetGuesses();
-
-
-				// } else if (/*WORD COMPLETED*/) { // if word completed
-				// 	wins++;
-				// 	winsTxt.textContent = "Wins: " + wins;
-				// 	resetGuesses();
+				} else if (lettersWord.indexOf(userGuess) > -1) { // userGuess in word
+					for (var i = 0; i < lettersWord.length; i++) {
+						if (lettersWord[i] === userGuess) {
+						    hangmanLetters[i]=userGuess;
+							console.log(hangmanLetters);
+							wordTxt.textContent = "Current word: " + hangmanLetters.join(" "); //print without commas
+						}
+					}
 				}
+			} else if (hangmanLetters.indexOf("_") > -1 && guessesLeft === 1) { // word not complete and guesses run out -- pick new word?? what happens??
+				// 	resetGuesses();
+
+			} else if (hangmanLetters.indexOf("_") === -1 && guessesLeft > 0) { // if word completed  << right now requires extra key press to "win"
+				wins++;
+				winsTxt.textContent = "Wins: " + wins;
+				resetGuesses();
 			}
 		}
 
@@ -66,25 +80,6 @@
 			guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
 			guessesSoFarTxt.textContent = "Letters already guessed: ";
 		}
-
-
-
-
-		/*
-		computer picks word
-		word splits into letters
-		set letters into blanks??
-
-		user guesses letter
-			if word complete, reset
-			if letter in word, replace corresponding blank
-			if wrong and letter not in guesses
-		
-		
-		
-		*/
-
-
 
 	</script>
 </body>
@@ -102,12 +97,6 @@
 7. Number of Guesses Remaining: (# of guesses remaining for the user).
 8. Letters Already Guessed: (Letters the user has guessed, displayed like `L Z Y H`).
 9. After the user wins/loses the game should automatically choose another word and make the user play it.
-- - -
-
-### Create a README.md
-Add a `README.md` to your repository describing the project. Here are some resources for creating your `README.md`. Here are some resources to help you along the way:
-* [About READMEs](https://help.github.com/articles/about-readmes/)
-* [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
 - - -
 
 ### Add To Your Portfolio
