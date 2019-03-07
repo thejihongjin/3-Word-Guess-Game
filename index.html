@@ -31,31 +31,32 @@
 		var guessesSoFarTxt = document.getElementById("guesses-so-far-txt");
 
 		//press key to start
-		// just need to figure out how to pick new letter - document onload?
 		currentWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
-		// split word into letters into array
+		console.log(currentWord);
+		lettersWord = currentWord.split('');
+		console.log(lettersWord);
 
 		document.addEventListener('keyup', userInput);
 		function userInput(event) {
 			var userGuess = event.key.toLowerCase();
-			var newGuess;
+			//var newGuess;
 		
 			if (lettersGuessed.indexOf(userGuess) === -1) { //if userGuess not already in lettersGuessed
-				if (lettersWord.indexOf(userGuess) && guessesLeft > 1) { //
+
+				if (lettersWord.indexOf(userGuess) === -1 && guessesLeft > 1) { //if userGuess not in word and still have guesses left
 					guessesLeft--;
 					guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
-					//append guess to guesses so far
-					/*newGuess = document.createElement("new-guess");
-					newGuess.textContent = userGuess;
-					guessesSoFarTxt.appendChild(newGuess);*/
 					lettersGuessed.push(userGuess);
-					guessesSoFarTxt.textContent = "Letters already guessed: " + lettersGuessed; //split and append???
-				} else if (/*WORD NOT COMPLETE &&*/ guessesLeft === 1) { //what happens if guesses run out???
-					resetGuesses();
-				} else if (/*WORD COMPLETED*/) { // if word completed
-					wins++;
-					winsTxt.textContent = "Wins: " + wins;
-					resetGuesses();
+					guessesSoFarTxt.textContent = "Letters already guessed: " + lettersGuessed; //how to add space between letters?
+
+				//} else if (/*WORD NOT COMPLETE &&*/ guessesLeft === 1) { //what happens if guesses run out???
+				// 	resetGuesses();
+
+
+				// } else if (/*WORD COMPLETED*/) { // if word completed
+				// 	wins++;
+				// 	winsTxt.textContent = "Wins: " + wins;
+				// 	resetGuesses();
 				}
 			}
 		}
@@ -65,6 +66,23 @@
 			guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
 			guessesSoFarTxt.textContent = "Letters already guessed: ";
 		}
+
+
+
+
+		/*
+		computer picks word
+		word splits into letters
+		set letters into blanks??
+
+		user guesses letter
+			if word complete, reset
+			if letter in word, replace corresponding blank
+			if wrong and letter not in guesses
+		
+		
+		
+		*/
 
 
 
