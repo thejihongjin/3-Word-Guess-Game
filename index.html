@@ -5,102 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <!--link rel="stylesheet" type="text/css" href="./assets/css/reset.css"-->
+    <!--link rel="stylesheet" type="text/css" href="./assets/css/style.css"-->
 </head>
 <body>
-	<!--THEME: SOCCER-->
+	<h1>Word Guess Game: Famous Soccer Players Edition</h1>
 	<p>Press any key to get started!</p>
-    <p id="wins-txt">Wins:</p>
-    <p id="word-txt">Current word:</p>
+	<p id="wins-txt">Wins:</p>
+	<p id="word-txt">Current word:</p>
 	<p id="guesses-left-txt">Number of guesses remaining: </p>
-    <p id="guesses-so-far-txt">Letters already guessed: </p>
-
-	<script type="text/javascript">
-		var wordOptions = ['bicyclekick','defender','friendly','hattrick','lionelmessi','miahamm','nutmeg','wallpass','worldcup','yellowcard'];
-		var currentWord;
-		var lettersWord = [];
-		var hangmanLetters = [];
-
-		var wins = 0;
-		var guessesLeft = 9;
-		var lettersGuessed = [];
-        
-		var winsTxt = document.getElementById("wins-txt");
-		var wordTxt = document.getElementById("word-txt");
-		var guessesLeftTxt = document.getElementById("guesses-left-txt");
-		var guessesSoFarTxt = document.getElementById("guesses-so-far-txt");
-
-		resetGuesses();
-
-		document.addEventListener('keyup', userInput);
-		function userInput(event) {
-			var userGuess = event.key.toLowerCase();
-		
-			if (hangmanLetters.indexOf("_") > -1 && guessesLeft > 1) { // word not complete and guesses left
-				if (lettersWord.indexOf(userGuess) === -1 && lettersGuessed.indexOf(userGuess) === -1) { //if userGuess not in word and not in lettersGuessed
-					guessesLeft--;
-					guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
-					lettersGuessed.push(userGuess);
-					guessesSoFarTxt.textContent = "Letters already guessed: " + lettersGuessed.join(" ");
-				} else if (lettersWord.indexOf(userGuess) === -1 && lettersGuessed.indexOf(userGuess) > -1) { //if userGuess not in word and already in lettersGuessed
-
-				} else if (lettersWord.indexOf(userGuess) > -1) { // userGuess in word
-					for (var i = 0; i < lettersWord.length; i++) {
-						if (lettersWord[i] === userGuess) {
-						    hangmanLetters[i]=userGuess;
-							//console.log(hangmanLetters);
-							wordTxt.textContent = "Current word: " + hangmanLetters.join(" ");
-						}
-					}
-					if (hangmanLetters.indexOf("_") === -1) { // if word completed
-						wins++;
-						winsTxt.textContent = "Wins: " + wins;
-						resetGuesses();
-					} 
-				}
-			} else if (hangmanLetters.indexOf("_") > -1 && guessesLeft === 1) { // word not complete and guesses run out -- pick new word?? what happens??
-				//alert("Out of guesses. :( Click okay to play again.")
-				resetGuesses();
-			}
-		}
-
-		function resetGuesses() {
-			guessesLeft = 9;
-			lettersGuessed = [];
-			hangmanLetters = [];
-
-			guessesLeftTxt.textContent = "Number of guesses remaining: " + guessesLeft;
-			guessesSoFarTxt.textContent = "Letters already guessed: ";
-
-			currentWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
-			//console.log(currentWord);
-			lettersWord = currentWord.split('');
-			for (var i = 0; i < lettersWord.length; i++) {
-				hangmanLetters.push("_")
-			}
-			wordTxt.textContent = "Current word: " + hangmanLetters.join(" ");
-		}
-
-	</script>
+	<p id="guesses-so-far-txt">Letters already guessed: </p>
+	<br>
+	<p id="answer-txt"></p>
 	
     <script src="./assets/javascript/game.js"></script>
 </body>
 </html>
-
-<!-- 
-## Option Two: Word Guess Game (Challenge - Recommended)
-1. [Watch the demo](https://youtu.be/W-IJcC4tYFI).
-3. Use key events to listen for the letters that your players will type.
-4. Display the following on the page:
-5. Press any key to get started!
-6. Wins: (# of times user guessed the word correctly).
-   * If the word is `madonna`, display it like this when the game starts: `_ _ _ _ _ _ _`.
-   * As the user guesses the correct letters, reveal them: `m a d o _  _ a`.
-7. Number of Guesses Remaining: (# of guesses remaining for the user).
-8. Letters Already Guessed: (Letters the user has guessed, displayed like `L Z Y H`).
-9. After the user wins/loses the game should automatically choose another word and make the user play it.
-- - -
-
-### Add To Your Portfolio
-After completing the homework please add the piece to your portfolio. Make sure to add a link to your updated portfolio in the comments section of your homework so the TAs can easily ensure you completed this step when they are grading the assignment. To receive an 'A' on any assignment, you must link to it from your portfolio.
--->
