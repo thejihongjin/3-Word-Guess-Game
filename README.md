@@ -1,4 +1,5 @@
-# 3-Word-Guess-Game
+# 3b-Word-Guess-Game
+https://thejihongjin.github.io/3b-Word-Guess-Game/
 
 ## Option Two: Word Guess Game (Challenge - Recommended)
 1. [Watch the demo](https://youtu.be/W-IJcC4tYFI).
